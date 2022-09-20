@@ -67,7 +67,7 @@ const Score = () => {
         <Card shadow="xs" p="lg" radius="md" withBorder>
           <Stack spacing={"lg"}>
             <Group>
-              <Text>ถ้าจะไม่ได้ F คุณต้องทำคะแนนสอบปลายภาคให้ได้</Text>
+              <Text>ถ้าจะไม่ได้ F คุณต้องทำคะแนนสอบปลายภาคให้ได้อย่างน้อย</Text>
               <Badge color="indigo" size="xl">
                 {grade.finalScoreNoF} / 45
               </Badge>
