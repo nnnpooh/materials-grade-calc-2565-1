@@ -5,7 +5,7 @@ const FAQ: NextPage = () => {
   return (
     <Stack>
       <Stack>
-        <Title order={3}>ตัด F ประมาณเท่าไหร่ครับ</Title>
+        <Title order={3}>ตัด F ประมาณเท่าไหร่</Title>
         <Text>45 คะแนนจากคะแนนรวมทั้งหมด (ที่ปรับให้เต็ม 100)</Text>
       </Stack>
 
@@ -18,7 +18,7 @@ const FAQ: NextPage = () => {
         </Text>
       </Stack>
 
-      <Stack>
+      {/* <Stack>
         <Title order={3}>ถ้าอยากไปสหกิจต้องทำอย่างไรบ้าง</Title>
         <Text>สำหรับภาค IE นะครับ</Text>
         <List>
@@ -47,6 +47,23 @@ const FAQ: NextPage = () => {
               </List.Item>
               และได้รับลำดับขั้น (A-F)
             </List>
+          </List.Item>
+        </List>
+      </Stack> */}
+
+      <Stack>
+        <Title order={3}>ประมาณเกรดจาก Midterm ได้อย่างไร</Title>
+
+        <List>
+          <List.Item>
+            ทำคะแนน Midterm ให้เต็ม 85 (มาจากสัดส่วนคะแนน Midterm + Final = 85%
+            ของเกรด)
+          </List.Item>
+          <List.Item>
+            เอาคะแนนที่ได้บวก 15 (สมมุติว่าได้คะแนนเก็บเต็ม 15 คะแนน)
+          </List.Item>
+          <List.Item>
+            ตัดเกรดตาม Mean และ Standard Deviation และเพดาน F
           </List.Item>
         </List>
       </Stack>
