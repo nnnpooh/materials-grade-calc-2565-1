@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           padding="md"
           header={
             <Header height={60} style={{
-              alignItems: "center", display: "flex", justifyContent: "start", marginLeft: 30, flexWrap: 'nowrap'
+              alignItems: "center", display: "flex", justifyContent: "start", paddingLeft: 30, flexWrap: 'nowrap'
             }}>
               <Stack>
                 <Group spacing={40}>
