@@ -30,15 +30,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <AppShell
           padding="md"
           header={
-            <Header height={60} pt={"md"}>
-              <Container>
-                <Stack>
-                  <Group spacing={40}>
-                    <Anchor href="/">Home</Anchor>
-                    <Anchor href="/faq">FAQ</Anchor>
-                  </Group>
-                </Stack>
-              </Container>
+            <Header height={60} style={{
+              alignItems: "center", display: "flex", justifyContent: "start", marginLeft: 30, flexWrap: 'nowrap'
+            }}>
+              <Stack>
+                <Group spacing={40}>
+                  <Anchor href="/">Home</Anchor>
+                  <Anchor href="/faq">FAQ</Anchor>
+                </Group>
+              </Stack>
             </Header>
           }
         >

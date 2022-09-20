@@ -75,10 +75,11 @@ const Score = () => {
               <Badge color="indigo" size="xl">
                 {grade.finalPercentNoF}%
               </Badge>
+              <Text>ของข้อสอบปลายภาค</Text>
             </Group>
             <Divider />
             <Group>
-              <Text>ถ้าต้องตัดคะแนนด้วยมิดเทอมอย่างเดียวคุณจะได้เกรด</Text>
+              <Text>ถ้าต้องตัดเกรดด้วยคะแนนสอบกลางภาคอย่างเดียวคุณจะได้เกรด</Text>
               <Badge size="xl" color="red">
                 {grade.gradeLetter}
               </Badge>
@@ -105,7 +106,7 @@ const Home: NextPage = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           validateOnChange={true}
-          onSubmit={() => {}}
+          onSubmit={() => { }}
         >
           {({
             values,
