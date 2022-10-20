@@ -14,6 +14,7 @@ import {
   Card,
   List,
   Divider,
+  Table
 } from "@mantine/core"
 import { useState } from "react"
 import { Formik, useFormikContext } from "formik"
@@ -60,7 +61,31 @@ const Score = () => {
     Object.keys(touched).length === 0 &&
     Object.getPrototypeOf(touched) === Object.prototype
 
+
+  console.log(grade)
   // console.log({ errors, isValid, touched, isClean })
+
+  const gradeLetters = ["A", "B+", "B", "C+"] as const
+  const rows = gradeLetters.map(gl => (
+    <tr key={gl}>
+      <td>
+        <Badge size="lg" color="red">
+          {gl}
+        </Badge>
+
+      </td>
+      <td>
+        {grade.finalTargetScores[gl]} / 45
+      </td>
+
+
+      <td>
+
+        {grade.finalTargetPercents[gl]}%
+      </td>
+    </tr>
+
+  ))
   return (
     <>
       {isValid && !isClean && (
@@ -79,11 +104,34 @@ const Score = () => {
             </Group>
             <Divider />
             <Group>
-              <Text>ถ้าต้องตัดเกรดด้วยคะแนนสอบกลางภาคอย่างเดียวคุณจะได้เกรด</Text>
+              <Text>
+                ถ้าต้องตัดเกรดด้วยคะแนนสอบกลางภาคอย่างเดียวคุณจะได้เกรด
+              </Text>
               <Badge size="xl" color="red">
                 {grade.gradeLetter}
               </Badge>
             </Group>
+            <Divider />
+            <Group>
+              <Text>
+                ถ้าใช้การตัดเกรดจากเทอมที่แล้วคุณจะต้องสอบปลายภาคให้ได้อย่างน้อย
+              </Text>
+
+              <Table highlightOnHover={true}>
+                <thead>
+                  <tr>
+                    <th>เกรดที่ต้องการ</th>
+                    <th>คะแนนสอบปลายภาค</th>
+                    <th>เปอร์เซ็นต์คะแนนสอบปลายภาค</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows}
+                </tbody>
+
+              </Table>
+            </Group>
+
           </Stack>
         </Card>
       )}
@@ -214,10 +262,21 @@ function calcGrade(
   quiz: number,
   assignment: number
 ) {
+  const gradeCeiling = {
+    A: 68.23,
+    "B+": 63.2,
+    B: 58.18,
+    "C+": 53.15,
+    C: 48.12,
+    "D+": 43.1,
+    D: 38.07,
+  }
+
   let finalScoreNoF = 45 - (midterm + attentdance + quiz + assignment)
   let finalPercentNoF = (finalScoreNoF / 45) * 100
-  finalScoreNoF = Number((Math.round(finalScoreNoF * 100) / 100).toFixed(2))
-  finalPercentNoF = Number((Math.round(finalPercentNoF * 100) / 100).toFixed(2))
+  finalScoreNoF = rounded(finalScoreNoF)
+  finalPercentNoF = rounded(finalPercentNoF)
+
   if (finalScoreNoF < 0) {
     finalScoreNoF = 0
     finalPercentNoF = 0
@@ -233,23 +292,53 @@ function calcGrade(
     mean_target + ((totalScore - mean_current) * std_target) / std_current
 
   let gradeLetter = ""
-  if (totalScoreAdjusted > 68.23) {
+  if (totalScoreAdjusted > gradeCeiling["A"]) {
     gradeLetter = "A"
-  } else if (totalScoreAdjusted > 63.2) {
+  } else if (totalScoreAdjusted > gradeCeiling["B+"]) {
     gradeLetter = "B+"
-  } else if (totalScoreAdjusted > 58.18) {
+  } else if (totalScoreAdjusted > gradeCeiling["B"]) {
     gradeLetter = "B"
-  } else if (totalScoreAdjusted > 53.15) {
+  } else if (totalScoreAdjusted > gradeCeiling["C+"]) {
     gradeLetter = "C+"
-  } else if (totalScoreAdjusted > 48.12) {
+  } else if (totalScoreAdjusted > gradeCeiling["C"]) {
     gradeLetter = "C"
-  } else if (totalScoreAdjusted > 43.1) {
+  } else if (totalScoreAdjusted > gradeCeiling["D+"]) {
     gradeLetter = "D+"
-  } else if (totalScoreAdjusted > 38.07) {
+  } else if (totalScoreAdjusted > gradeCeiling["D"]) {
     gradeLetter = "D"
   } else {
     gradeLetter = "F"
   }
 
-  return { gradeLetter, finalScoreNoF, finalPercentNoF }
+  const gradeLetters = ["A", "B+", "B", "C+", "C", "D+", "D"] as const
+  const finalTargetScores = {} as typeof gradeCeiling
+  const finalTargetPercents = {} as typeof gradeCeiling
+  gradeLetters.forEach((gl) => {
+    const totalScore =
+      ((gradeCeiling[gl] - mean_target) * std_current) / std_target +
+      mean_current
+
+    let finalTargetScore = totalScore - (attentdance + quiz + assignment + midterm)
+    if (finalTargetScore > 45) {
+      finalTargetScore = 45
+    }
+    else if (finalTargetScore < 0) {
+      finalTargetScore = 0
+    }
+    let finalTargetPercent = finalTargetScore / 45 * 100
+
+
+    finalTargetScore = rounded(finalTargetScore)
+    finalTargetPercent = rounded(finalTargetPercent)
+
+    finalTargetScores[gl] = finalTargetScore
+    finalTargetPercents[gl] = finalTargetPercent
+  })
+
+
+  return { gradeLetter, finalScoreNoF, finalPercentNoF, finalTargetScores, finalTargetPercents }
+}
+
+function rounded(n: number) {
+  return Number((Math.round(n * 100) / 100).toFixed(1))
 }
