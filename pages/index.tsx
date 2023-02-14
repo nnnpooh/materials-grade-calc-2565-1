@@ -114,7 +114,7 @@ const Score = () => {
             <Divider />
             <Group>
               <Text>
-                ถ้าใช้การตัดเกรดจากเทอมที่แล้วคุณจะต้องสอบปลายภาคให้ได้อย่างน้อย
+                ถ้าใช้การตัดเกรดจากปีที่แล้วคุณจะต้องสอบปลายภาคให้ได้อย่างน้อย
               </Text>
 
               <Table highlightOnHover={true}>
@@ -208,7 +208,7 @@ const Home: NextPage = () => {
 
                   <Stack spacing={"xs"}>
                     <Title order={3}>Quiz Score</Title>
-                    <Text color="gray">(0-3%) ทำไปแล้ว 1.5% </Text>
+                    <Text color="gray">(0-3%) ยังไม่ได้ให้ทำ </Text>
                     <Input
                       type="number"
                       name="quizScore"
@@ -224,8 +224,8 @@ const Home: NextPage = () => {
                   </Stack>
 
                   <Stack spacing={"xs"}>
-                    <Title order={3}>Assignment Score (0-5%)</Title>
-                    <Text color="gray">ยังไม่ได้ให้ทำ</Text>
+                    <Title order={3}>Assignment Score</Title>
+                    <Text color="gray">(0-5%) ยังไม่ได้ให้ทำ</Text>
                     <Input
                       type="number"
                       name="assignmentScore"
@@ -282,12 +282,12 @@ function calcGrade(
     finalPercentNoF = 0
   }
 
-  const mean_current = 50.890194
+  const mean_current = 57.1628
   const mean_target = 53.15
-  const std_current = 11.016146
+  const std_current = 12.81748911
   const std_target = 8.59
 
-  const totalScore = (midterm / 40) * 85 + 15
+  const totalScore = (midterm / 40) * 85 + attentdance + quiz + assignment
   const totalScoreAdjusted =
     mean_target + ((totalScore - mean_current) * std_target) / std_current
 
