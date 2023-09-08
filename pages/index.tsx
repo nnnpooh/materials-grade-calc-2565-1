@@ -263,13 +263,13 @@ function calcGrade(
   assignment: number
 ) {
   const gradeCeiling = {
-    A: 68.23,
-    "B+": 63.2,
-    B: 58.18,
-    "C+": 53.15,
-    C: 48.12,
-    "D+": 43.1,
-    D: 38.07,
+    A: 71.79,
+    "B+": 66.5,
+    B: 61.21,
+    "C+": 55.92,
+    C: 50.63,
+    "D+": 45.34,
+    D: 40.05,
   }
 
   let finalScoreNoF = 45 - (midterm + attentdance + quiz + assignment)
@@ -282,10 +282,10 @@ function calcGrade(
     finalPercentNoF = 0
   }
 
-  const mean_current = 57.1628
-  const mean_target = 53.15
-  const std_current = 12.81748911
-  const std_target = 8.59
+  const mean_current = 51.774912
+  const mean_target = 55.92
+  const std_current = 10.370103
+  const std_target = 10.58
 
   const totalScore = (midterm / 40) * 85 + attentdance + quiz + assignment
   const totalScoreAdjusted =
